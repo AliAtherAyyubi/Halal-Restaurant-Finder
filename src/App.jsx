@@ -1,17 +1,20 @@
 import { useState, useMemo } from 'react'
 import { useRestaurants } from './hooks/useRestaurants'
 import { getDistanceKm } from './utils/distance'
-import Sidebar from './components/Sidebar'
+import Navbar from './components/Navbar'
+import MenuSidebar from './components/MenuSidebar'
+import RestaurantList from './components/RestaurantList'
 import MapView from './components/MapView'
-import RestaurantDetail from './components/RestaurantDetail'
+import DetailPage from './components/DetailPage'
 
 export default function App() {
   const { restaurants, loading } = useRestaurants()
   const [selectedRestaurant, setSelectedRestaurant] = useState(null)
+  const [showDetail, setShowDetail] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedCuisine, setSelectedCuisine] = useState('')
+  const [activeMenu, setActiveMenu] = useState('restaurants')
   const [userLocation, setUserLocation] = useState(null)
-  const [showDetail, setShowDetail] = useState(false)
 
   const cuisines = useMemo(() => {
     const set = new Set(restaurants.map(r => r.cuisine).filter(Boolean))
@@ -43,50 +46,64 @@ export default function App() {
     return list
   }, [restaurants, searchQuery, selectedCuisine, userLocation])
 
+  const handleNearMe = () => {
+    if (!navigator.geolocation) return alert('Geolocation not supported.')
+    navigator.geolocation.getCurrentPosition(
+      pos => setUserLocation({ lat: pos.coords.latitude, lng: pos.coords.longitude }),
+      () => alert('Unable to retrieve your location.')
+    )
+  }
+
   const handleSelectRestaurant = (r) => {
     setSelectedRestaurant(r)
     setShowDetail(true)
   }
 
-  const handleNearMe = () => {
-    if (!navigator.geolocation) return alert('Geolocation not supported.')
-    navigator.geolocation.getCurrentPosition(
-      pos => setUserLocation({ lat: pos.coords.latitude, lng: pos.coords.longitude }),
-      ()  => alert('Unable to retrieve your location.')
+  if (showDetail && selectedRestaurant) {
+    return (
+      <DetailPage
+        restaurant={selectedRestaurant}
+        onBack={() => setShowDetail(false)}
+        userLocation={userLocation}
+      />
     )
   }
 
   return (
-    <div className="grid h-screen overflow-hidden" style={{ gridTemplateColumns: '320px 1fr' }}>
-      <Sidebar
-        restaurants={filteredRestaurants}
-        selectedRestaurant={selectedRestaurant}
-        onSelectRestaurant={handleSelectRestaurant}
+    <div className="flex flex-col h-screen overflow-hidden bg-[#e8f0e8]">
+      <Navbar
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
-        selectedCuisine={selectedCuisine}
-        onCuisineChange={setSelectedCuisine}
-        cuisines={cuisines}
-        userLocation={userLocation}
         onNearMe={handleNearMe}
-        loading={loading}
       />
 
-      <main className="relative overflow-hidden">
-        <MapView
+      <div className="flex flex-1 overflow-hidden">
+        {/* Column 1: Menu sidebar */}
+        <MenuSidebar activeMenu={activeMenu} onMenuChange={setActiveMenu} />
+
+        {/* Column 2: Restaurant list */}
+        <RestaurantList
           restaurants={filteredRestaurants}
           selectedRestaurant={selectedRestaurant}
           onSelectRestaurant={handleSelectRestaurant}
+          selectedCuisine={selectedCuisine}
+          onCuisineChange={setSelectedCuisine}
+          cuisines={cuisines}
           userLocation={userLocation}
+          loading={loading}
         />
-        {showDetail && selectedRestaurant && (
-          <RestaurantDetail
-            restaurant={selectedRestaurant}
-            onClose={() => setShowDetail(false)}
+
+        {/* Column 3: Map */}
+        <div className="flex-1 relative overflow-hidden">
+          <MapView
+            restaurants={filteredRestaurants}
+            selectedRestaurant={selectedRestaurant}
+            onSelectRestaurant={handleSelectRestaurant}
             userLocation={userLocation}
+            onNearMe={handleNearMe}
           />
-        )}
-      </main>
+        </div>
+      </div>
     </div>
   )
 }
