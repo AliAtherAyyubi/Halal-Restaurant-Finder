@@ -15,30 +15,7 @@ export function getDistanceKm(lat1, lon1, lat2, lon2) {
   return R * c
 }
 
-/**
- * Returns cuisine-based pin colour for map markers
- */
-export function getCuisineColor(cuisine) {
-  const map = {
-    turkish:   '#16a34a',
-    arab:      '#0369a1',
-    arabic:    '#0369a1',
-    pakistani: '#7c3aed',
-    indian:    '#d97706',
-    afghan:    '#b45309',
-    somali:    '#dc2626',
-    lebanese:  '#0891b2',
-    persian:   '#9333ea',
-    iraqi:     '#c2410c',
-    moroccan:  '#ca8a04',
-    mediterranean: '#0284c7',
-  }
-  const key = (cuisine || '').toLowerCase().trim()
-  for (const [k, v] of Object.entries(map)) {
-    if (key.includes(k)) return v
-  }
-  return '#15803d' // default green
-}
+
 
 /**
  * Restaurant food images mapped by cuisine (Unsplash free photos)
@@ -61,4 +38,15 @@ export function getCuisineImage(cuisine, name) {
     if (key.includes(k)) return v
   }
   return 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&q=80'
+}
+////
+export function formatDriveTime(dist) {
+  if (dist === null) return null
+  const minutes = Math.round((dist / 30) * 60)
+  if (minutes >= 60) {
+    const hrs = Math.floor(minutes / 60)
+    const mins = minutes % 60
+    return mins > 0 ? `${hrs} hr ${mins} min` : `${hrs} hr`
+  }
+  return `${minutes} min`
 }
