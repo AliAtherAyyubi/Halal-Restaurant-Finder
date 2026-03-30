@@ -76,27 +76,33 @@
 
 ```
 halal-finder/
-├── public/
-├── src/
-│   ├── components/
-│   │   ├── Navbar.jsx          # Top navigation with search & Near Me
-│   │   ├── MenuSidebar.jsx     # Left menu (Restaurants, Mosques, Favorites, Settings)
-│   │   ├── RestaurantList.jsx  # Scrollable restaurant cards column
-│   │   ├── MapView.jsx         # Leaflet map, pins, tooltips, SelectedCard overlay
-│   │   └── DetailPage.jsx      # Full-screen restaurant detail page
-│   ├── hooks/
-│   │   └── useRestaurants.js   # Fetch & parse Google Sheet CSV, loading/error states
-│   ├── utils/
-│   │   ├── distance.js         # Haversine formula, drive time, cuisine colors & images
-│   │   └── sheetParser.js      # CSV text → JS objects parser
-│   ├── App.jsx                 # Root component, state management, routing logic
-│   ├── index.css               # Tailwind directives + Leaflet overrides
-│   └── main.jsx                # React entry point
-├── index.html
-├── tailwind.config.js
-├── postcss.config.js
-├── vite.config.js
-└── package.json
+├── 📁 screenshots
+│   ├── 🖼️ detail.png
+│   └── 🖼️ main.png
+├── 📁 src
+│   ├── 📁 components
+│   │   ├── 📄 DetailPage.jsx
+│   │   ├── 📄 MapView.jsx
+│   │   ├── 📄 MenuSidebar.jsx
+│   │   ├── 📄 Navbar.jsx
+│   │   └── 📄 RestaurantList.jsx
+│   ├── 📁 hooks
+│   │   └── 📄 useRestaurants.js
+│   ├── 📁 utils
+│   │   ├── 📄 distance.js
+│   │   └── 📄 sheetParser.js
+│   ├── 📄 App.jsx
+│   ├── 🎨 index.css
+│   └── 📄 main.jsx
+├── ⚙️ .gitattributes
+├── ⚙️ .gitignore
+├── 📝 README.md
+├── 🌐 index.html
+├── ⚙️ package-lock.json
+├── ⚙️ package.json
+├── 📄 postcss.config.js
+├── 📄 tailwind.config.js
+└── 📄 vite.config.js
 ```
 
 ---
