@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { useRestaurants } from './hooks/useRestaurants'
 import { getDistanceKm } from './utils/distance'
 import Navbar from './components/Navbar'
@@ -20,7 +20,16 @@ export default function App() {
     const set = new Set(restaurants.map(r => r.cuisine).filter(Boolean))
     return [...set].sort()
   }, [restaurants])
-
+  ///////////
+  // get permission to access user location
+useEffect(() => {
+  if (!navigator.geolocation) return
+  navigator.geolocation.getCurrentPosition(
+    pos => setUserLocation({ lat: pos.coords.latitude, lng: pos.coords.longitude }),
+    () => console.log('Location permission denied.')
+  )
+}, []) 
+////////////
   const filteredRestaurants = useMemo(() => {
     let list = restaurants
     if (searchQuery) {
@@ -54,11 +63,18 @@ export default function App() {
     )
   }
 
+  // Click on card → only selects + flies map, no detail page
   const handleSelectRestaurant = (r) => {
+    setSelectedRestaurant(r)
+  }
+
+  // Click "View Full Details" inside SelectedCard → opens DetailPage
+  const handleViewDetail = (r) => {
     setSelectedRestaurant(r)
     setShowDetail(true)
   }
 
+  // Full screen detail page
   if (showDetail && selectedRestaurant) {
     return (
       <DetailPage
@@ -69,6 +85,7 @@ export default function App() {
     )
   }
 
+
   return (
     <div className="flex flex-col h-screen overflow-hidden bg-[#e8f0e8]">
       <Navbar
@@ -78,10 +95,8 @@ export default function App() {
       />
 
       <div className="flex flex-1 overflow-hidden">
-        {/* Column 1: Menu sidebar */}
         <MenuSidebar activeMenu={activeMenu} onMenuChange={setActiveMenu} />
 
-        {/* Column 2: Restaurant list */}
         <RestaurantList
           restaurants={filteredRestaurants}
           selectedRestaurant={selectedRestaurant}
@@ -93,7 +108,6 @@ export default function App() {
           loading={loading}
         />
 
-        {/* Column 3: Map */}
         <div className="flex-1 relative overflow-hidden">
           <MapView
             restaurants={filteredRestaurants}
@@ -101,6 +115,7 @@ export default function App() {
             onSelectRestaurant={handleSelectRestaurant}
             userLocation={userLocation}
             onNearMe={handleNearMe}
+            onViewDetail={handleViewDetail}
           />
         </div>
       </div>
