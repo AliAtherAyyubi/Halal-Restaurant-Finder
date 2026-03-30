@@ -7,7 +7,8 @@ function RestaurantCard({ restaurant: r, isSelected, userLocation, onClick }) {
     : null
   const img = getCuisineImage(r.cuisine)
   const isFullyHalal = r.halal_status?.toLowerCase().includes('fully')
-  const rating = (4.5 + Math.random() * 0.4).toFixed(1)
+  const rating = r.rating || '4.0'
+const reviewCount = r.review_count || ''
 
   return (
     <div
@@ -17,7 +18,12 @@ function RestaurantCard({ restaurant: r, isSelected, userLocation, onClick }) {
     >
       {/* Image */}
       <div className="relative h-44 overflow-hidden">
-        <img src={img} alt={r.name} loading="lazy" className="w-full h-full object-cover" />
+        <img
+          src={r.image || getCuisineImage(r.cuisine)}
+          alt={r.name}
+          className="w-full h-full object-cover"
+          onError={e => { e.target.src = getCuisineImage(r.cuisine) }}
+        />
         {isFullyHalal && (
           <span className="absolute top-3 right-3 flex items-center gap-1 px-2.5 py-1
                            bg-[#0e4b3c] text-white text-[10px]  font-bold rounded-full uppercase tracking-wide">
@@ -33,6 +39,7 @@ function RestaurantCard({ restaurant: r, isSelected, userLocation, onClick }) {
           <h3 className="font-semibold text-[15px] text-gray-900">{r.name}</h3>
           <span className="flex items-center gap-1 bg-[#b9f0aa] text-[12px] font-semibold text-black px-2 rounded-md">
             ★ {rating}
+          
           </span>
         </div>
         <p className="text-[12px] text-gray-500 mb-3">
@@ -60,10 +67,10 @@ export default function RestaurantList({
   restaurants, selectedRestaurant, onSelectRestaurant,
   selectedCuisine, onCuisineChange, cuisines, userLocation, loading
 }) {
-  const quickFilters = ['Turkish', 'Arab', 'Pakistani', 'Open Now']
+  const quickFilters = ['Turkish', 'Arab', 'Pakistani','Syrian','Lebanese','Uyghur','Indian','Iraqi','Middle Eastern', 'Open Now']
 
   return (
-    <div className="w-80 flex flex-col bg-[#ebf5eb] border-r border-green-100/50 flex-shrink-0 overflow-hidden">
+    <div className="w-1/4 flex flex-col bg-[#ebf5eb] border-r border-green-100/50 flex-shrink-0 overflow-hidden">
       {/* Header */}
       <div className="px-5 pt-5 pb-3 flex-shrink-0">
         <h2 className="text-xl font-bold text-gray-900 mb-3">Top Halal Restaurants</h2>
@@ -90,7 +97,7 @@ export default function RestaurantList({
 
       {/* Scrollable cards */}
       <div className="flex-1 overflow-y-auto px-4 pb-4 pt-2"
-           style={{ scrollbarWidth: 'thin', scrollbarColor: '#d1d5db transparent' }}>
+        style={{ scrollbarWidth: 'thin', scrollbarColor: '#d1d5db transparent' }}>
         {loading ? (
           <div className="flex flex-col items-center justify-center py-16 text-gray-400">
             <div className="w-8 h-8 border-2 border-gray-200 border-t-green-600 rounded-full animate-spin mb-3" />
