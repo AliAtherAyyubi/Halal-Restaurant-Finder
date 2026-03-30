@@ -1,72 +1,246 @@
-# Halal Restaurant Finder Finland 🇫🇮
+# 🕌 Verdant Halal — Halal Restaurant Finder Finland
 
-A React web application to discover halal restaurants across Finland on an interactive map.
+<div align="center">
 
-## Features
+![Verdant Halal Banner](https://images.unsplash.com/photo-1544025162-d76694265947?w=1200&h=400&fit=crop&q=80)
 
-- **Interactive Map** – React Leaflet map centered on Finland with color-coded pins per cuisine
-- **Real Data** – Fetched directly from a published Google Sheet CSV using the native `fetch` API
-- **Search & Filter** – Search by name or city; filter by cuisine type; both work simultaneously
-- **Restaurant Detail Panel** – Click any pin or card for full details: name, address, hours, halal status, website
-- **Near Me** – Geolocation API to find and sort the closest restaurants
-- **Cuisine-coloured pins** – Each cuisine type gets a unique marker color
-- **Halal badges** – "Verified Halal" vs "Halal Options" shown on every card
-- **Fully Responsive** – Works on mobile and desktop
+**Discover verified halal restaurants across Finland — on an interactive map.**
 
-## Tech Stack
+[![Live Demo](https://img.shields.io/badge/🌐_Live_Demo-Visit_App-16a34a?style=for-the-badge)](https://halal-restaurant-finder-gold.vercel.app/)
+[![React](https://img.shields.io/badge/React-18.3-61DAFB?style=for-the-badge&logo=react)](https://react.dev/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-38BDF8?style=for-the-badge&logo=tailwindcss)](https://tailwindcss.com/)
+[![Vite](https://img.shields.io/badge/Vite-5.4-646CFF?style=for-the-badge&logo=vite)](https://vitejs.dev/)
+[![Vercel](https://img.shields.io/badge/Deployed_on-Vercel-000000?style=for-the-badge&logo=vercel)](https://vercel.com/)
 
-| Tool | Purpose |
-|------|---------|
-| React + Vite | Frontend framework and build tool |
-| React Leaflet | Interactive map rendering |
-| CartoDB Tiles | Clean, minimal map tiles |
-| Google Sheets CSV | Data source (fetched in browser) |
-| Plain CSS | Styling (no Tailwind dependency) |
+</div>
 
-## Project Structure
+---
+
+## 🌍 Live Demo
+
+👉 **[https://halal-restaurant-finder-gold.vercel.app/](https://halal-restaurant-finder-gold.vercel.app/)**
+
+---
+
+## 📸 Screenshots
+
+### Main View — 3-Column Layout
+> Interactive map with restaurant list, menu sidebar and real-time filtering
+
+![Main View](./screenshots/main.png)
+
+### Restaurant Detail Page
+> Full-screen detail view with map, opening hours, halal status and directions
+
+![Detail Page](./screenshots/detail.png)
+
+
+---
+
+## ✨ Features
+
+- 🗺️ **Interactive Map** 
+- 📍 **40+ Halal Restaurants**
+- ✅ **Halal Verification Badges** 
+- 🔍 **Live Search** 
+- 🍽️ **Cuisine Filters** 
+- 📏 **Real Distance & Drive Time** 
+- 📌 **Pin Hover Tooltips** 
+
+- 📋 **Selected Card Overlay**
+- 📄 **Full Detail Page** 
+- 🌐 **Google Sheets Data Source** 
+- ⭐ **Real Ratings**
+<!-- - 📱 **Responsive Design** — Works on mobile and desktop -->
+- 🔄 **Fallback Data** 
+
+---
+
+## 🛠️ Tech Stack
+
+| Technology | Purpose | Version |
+|---|---|---|
+| **React** | UI framework | 18.3 |
+| **Vite** | Build tool & dev server | 5.4 |
+| **Tailwind CSS** | Utility-first styling | 3.4 |
+| **React Leaflet** | Interactive map | 4.2 |
+| **Leaflet.js** | Map engine | 1.9 |
+| **Lucide React** | Icon library | Latest |
+| **Google Sheets** | Live data source (CSV) | — |
+| **OpenStreetMap / CartoDB** | Map tiles | — |
+| **Vercel** | Hosting & deployment | — |
+
+---
+
+## 📁 Project Structure
 
 ```
-src/
-├── components/
-│   ├── CuisineFilter.jsx   – Cuisine chip buttons
-│   ├── MapView.jsx         – Leaflet map + markers + zoom
-│   ├── RestaurantCard.jsx  – Card in the sidebar list
-│   ├── RestaurantDetail.jsx – Detail panel (map overlay)
-│   ├── SearchBar.jsx       – Search input
-│   └── Sidebar.jsx         – Left panel container
-├── hooks/
-│   └── useRestaurants.js   – Custom hook: fetch + parse CSV, loading/error state
-├── utils/
-│   ├── distance.js         – Haversine formula, cuisine colors/images
-│   └── sheetParser.js      – CSV → JS objects parser
-├── App.jsx                 – Root component, state management
-├── index.css               – All styles
-└── main.jsx                – React entry point
+halal-finder/
+├── public/
+├── src/
+│   ├── components/
+│   │   ├── Navbar.jsx          # Top navigation with search & Near Me
+│   │   ├── MenuSidebar.jsx     # Left menu (Restaurants, Mosques, Favorites, Settings)
+│   │   ├── RestaurantList.jsx  # Scrollable restaurant cards column
+│   │   ├── MapView.jsx         # Leaflet map, pins, tooltips, SelectedCard overlay
+│   │   └── DetailPage.jsx      # Full-screen restaurant detail page
+│   ├── hooks/
+│   │   └── useRestaurants.js   # Fetch & parse Google Sheet CSV, loading/error states
+│   ├── utils/
+│   │   ├── distance.js         # Haversine formula, drive time, cuisine colors & images
+│   │   └── sheetParser.js      # CSV text → JS objects parser
+│   ├── App.jsx                 # Root component, state management, routing logic
+│   ├── index.css               # Tailwind directives + Leaflet overrides
+│   └── main.jsx                # React entry point
+├── index.html
+├── tailwind.config.js
+├── postcss.config.js
+├── vite.config.js
+└── package.json
 ```
 
-## Getting Started
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js 18+
+- npm or yarn
+
+### Installation
 
 ```bash
-# 1. Install dependencies
+# 1. Clone the repository
+git clone https://github.com/aliatherayyubi/halal-restaurant-finder.git
+
+# 2. Navigate into the project
+cd halal-restaurant-finder
+
+# 3. Install dependencies
 npm install
 
-# 2. Start dev server
+# 4. Start the development server
 npm run dev
-
-# 3. Build for production
-npm run build
 ```
 
-## Deployment (Railway)
+Open [http://localhost:5173](http://localhost:5173) in your browser.
 
-1. Push the repo to GitHub
-2. Create a new Railway project and connect the GitHub repo
-3. Railway auto-detects Vite — add a build command: `npm run build`
-4. Set start command to: `npx serve dist`
-5. Done — Railway will give you a live URL
+### Build for Production
 
-## Notes
+```bash
+npm run build
+npm run preview
+```
 
-- If the Google Sheet CSV is unavailable, the app falls back to built-in sample data covering Helsinki, Tampere, Turku, Jyväskylä, Oulu, and Espoo.
-- Restaurant images are sourced from Unsplash (free-to-use photos, mapped by cuisine type).
-- Static placeholder values (e.g. ratings) are used where the Sheet doesn't provide that data.
+---
+
+## 📊 Data Source — Google Sheets
+
+The app fetches restaurant data live from a **publicly published Google Sheet** as CSV — no backend, no API keys needed.
+
+### How it works
+
+```
+Google Sheet → Published as CSV → fetch() in browser → sheetParser() → React state → UI
+```
+
+### Sheet Columns
+
+| Column | Type | Description |
+|---|---|---|
+| `name` | String | Restaurant name |
+| `address` | String | Street address |
+| `city` | String | City in Finland |
+| `latitude` | Number | GPS latitude |
+| `longitude` | Number | GPS longitude |
+| `cuisine` | String | Cuisine type (Turkish, Indian…) |
+| `halal_status` | String | Fully Halal / Halal Options |
+| `phone` | String | Contact number |
+| `website` | String | Website URL |
+| `hours` | String | Opening hours |
+| `image` | String | Photo URL |
+| `rating` | Number | Star rating (1–5) |
+| `review_count` | Number | Number of reviews |
+
+### To connect your own sheet
+
+1. Open your Google Sheet → **File → Share → Publish to web**
+2. Select **Sheet1** and **CSV format** → click **Publish**
+3. Copy the URL and paste it into `src/hooks/useRestaurants.js`:
+
+```js
+const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/YOUR_ID/pub?output=csv'
+```
+
+---
+
+## 🗺️ Restaurant Coverage
+
+| City | Restaurants |
+|---|---|
+| Helsinki | 22 |
+| Tampere | 5 |
+| Turku | 5 |
+| Espoo | 2 |
+| Jyväskylä | 3 |
+| Oulu | 3 |
+| **Total** | **40+** |
+
+---
+
+## 🌐 Deployment
+
+### Deploy to Vercel (Recommended)
+
+```bash
+# Install Vercel CLI
+npm i -g vercel
+
+# Deploy
+vercel
+```
+
+Or connect your GitHub repo directly at [vercel.com](https://vercel.com) for automatic deployments on every push.
+
+### Deploy to Netlify
+
+```bash
+npm run build
+# Drag and drop the /dist folder to netlify.com/drop
+```
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! If you know of a halal restaurant in Finland that should be listed:
+
+1. Fork the repository
+2. Add the restaurant to the Google Sheet (or open an Issue with the details)
+3. Submit a Pull Request
+
+---
+
+## 📄 License
+
+MIT License — free to use, modify and distribute.
+
+---
+
+## 🙏 Acknowledgements
+
+- Map tiles by [CartoDB](https://carto.com/) / [OpenStreetMap](https://www.openstreetmap.org/)
+- Food photography by [Unsplash](https://unsplash.com/)
+- Icons by [Lucide](https://lucide.dev/)
+- Ratings sourced from Google Maps & Tripadvisor
+- Built as an internship project for [NeuralFlex.io](https://neralflex.io)
+
+---
+
+<div align="center">
+
+Made with ❤️ for the Muslim community in Finland 🇫🇮
+
+**[🌐 Visit Live App](https://halal-restaurant-finder-gold.vercel.app/)**
+
+</div>
