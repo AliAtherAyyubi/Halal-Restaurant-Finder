@@ -3,7 +3,7 @@ import { sheetParser } from '../utils/sheetParser'
 
 // Public Google Sheet published as CSV
 const SHEET_CSV_URL =
-  'https://docs.google.com/spreadsheets/d/e/2PACX-1vSRqMnKPMN1u26eOFf5XM9m3jWhFQCdVtTFJ9yJ6OFQoJGfmEd4g62kJ5YwJgAKN-1RI-FQh5KNzxMN/pub?output=csv'
+  'https://docs.google.com/spreadsheets/d/e/2PACX-1vTnc9eiVWZjSzUSpkknmeam7EH4lWxIweFxj3BX9MuckLfuvFy-vIhGUkz6BTT7K0rJMs4lQXeZG7fs/pub?gid=1099152996&single=true&output=csv'
 
 /**
  * useRestaurants – custom hook that fetches and parses the restaurant CSV
@@ -50,7 +50,7 @@ export function useRestaurants() {
 
 // Fallback sample data in case the sheet is unavailable
 const FALLBACK_DATA = [
-  { id: 1, name: "Sultan's Feast Helsinki", address: "Aleksanterinkatu 15", city: "Helsinki", latitude: 60.1699, longitude: 24.9384, cuisine: "Turkish", halal_status: "Fully Halal", phone: "+358 40 123 4567", website: "https://example.com", hours: "Mon–Sun 11:00–22:00" },
+  { id: 1, name: "Sultan's Feast Helsinki", address: "Aleksanterinkatu 15", city: "Helsinki", latitude: 60.1699, longitude: 24.9384, cuisine: "Turkish", halal_status: "Fully Halal", phone: "+358 40 123 4567", website: "https://google.com", hours: "Mon–Sun 11:00–22:00" },
   { id: 2, name: "Petra Oasis", address: "Mannerheimintie 20", city: "Helsinki", latitude: 60.1715, longitude: 24.9310, cuisine: "Arab", halal_status: "Fully Halal", phone: "+358 40 234 5678", website: "", hours: "Mon–Sat 12:00–21:00" },
   { id: 3, name: "Habibi Helsinki", address: "Urho Kekkosen katu 1", city: "Helsinki", latitude: 60.1672, longitude: 24.9320, cuisine: "Lebanese", halal_status: "Fully Halal", phone: "+358 40 345 6789", website: "https://example.com", hours: "Mon–Thu 11:00–21:00, Fri 11:00–23:00, Sat–Sun 12:00–22:00" },
   { id: 4, name: "Spice Garden", address: "Hämeenkatu 10", city: "Tampere", latitude: 61.4978, longitude: 23.7610, cuisine: "Indian", halal_status: "Halal Options", phone: "+358 50 111 2222", website: "", hours: "Tue–Sun 12:00–21:00" },
